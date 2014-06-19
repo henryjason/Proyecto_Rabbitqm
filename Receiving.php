@@ -37,7 +37,7 @@ function response(){
 
     $channel->queue_declare('response', false, false, false, false);
 
-    $msg = new AMQPMessage('Msg Recivido --> by HENRY');
+    $msg = new AMQPMessage('Msg Recivido --> by HENRY CORDERO BONILA');
     $channel->basic_publish($msg, '', 'response');
 
     echo " [x] Sent 'response'\n";
