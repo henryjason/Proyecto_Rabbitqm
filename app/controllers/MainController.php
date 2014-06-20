@@ -9,7 +9,10 @@ class MainController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('Main.main');
+        //$aviones = Avion::all();
+		$this->layout->titulo = 'Conversion de Archivos';
+		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));
+		//return View::make('Main.main');
 	}
 
 
