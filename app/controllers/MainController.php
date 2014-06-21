@@ -15,6 +15,35 @@ class MainController extends \BaseController {
 		//return View::make('Main.main');
 	}
 
+/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+
+     public function subir()
+	{
+
+
+   	if(Input::hasFile('archivo')) {
+
+   		  $file = Input::file('archivo');
+     
+          $extension = $file->getClientOriginalExtension();
+
+                   if($extension == 'mp3'){
+                         $name = $file->getClientOriginalName();
+                         $file->move( 'public/Upload_Files', $name);
+                    }
+
+    }
+     
+   
+	    $this->layout->titulo = 'Prueba';
+		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));	
+	
+	}
+
 
 	/**
 	 * Show the form for creating a new resource.
@@ -23,7 +52,7 @@ class MainController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+
 	}
 
 
@@ -34,7 +63,6 @@ class MainController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
 	}
 
 

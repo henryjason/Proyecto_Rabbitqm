@@ -11,8 +11,12 @@
 |
 */
 Route::resource('home', 'MainController');
+Route::post('home/subir', 'MainController@subir');
 
 Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+
+

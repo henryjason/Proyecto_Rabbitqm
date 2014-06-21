@@ -1,5 +1,7 @@
 <?php
 
+exec('lame ./music.mp3 ./m.wav');
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPConnection;
