@@ -15,46 +15,6 @@ class MainController extends \BaseController {
 		//return View::make('Main.main');
 	}
 
-/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-
-     public function subir()
-	{
-         
-         $name = '';
-
-   	if(Input::hasFile('archivo')) {
-
-   		  $file = Input::file('archivo');
-           
-          $extension = $file->getClientOriginalExtension();
-          //$type = $file->getMimeType();
-
-                   if($extension == 'mp3' || $extension == 'wav'){
-                         $name = $file->getClientOriginalName();
-                         $file->move( 'public/Upload_Files', $name);
-                    }
-
-         
-           
-    }
-
-        $formato = Input::get('formato');
-
-
-		$music = new Music;
-		$music->url= 'public/Upload_Files/'.$name;
-		$music->formato= $formato;
-		$music->save();
-		  
-	    $this->layout->titulo = 'prueba';
-		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));	
-	
-	}
-
 
 	/**
 	 * Show the form for creating a new resource.
@@ -64,7 +24,49 @@ class MainController extends \BaseController {
 	public function create()
 	{
 
+		   $name = '';
+		   $formato = Input::get('formato');
+		   $auto_string = ModelCola::auto_string();
+
+   	if(Input::hasFile('archivo')) {
+
+   		  $file = Input::file('archivo');
+           
+          $extension = $file->getClientOriginalExtension();
+          //$type = $file->getMimeType();
+
+                   if($extension == 'mp3' || $extension == 'wav'){
+                        // $name = $file->getClientOriginalName();
+                         $name = $auto_string.'.'.$extension;
+                         $file->move( 'public/Upload_Files/', $name);
+                    }
+
+    }
+
+
+        $input = array(
+        'url' =>'public/Upload_Files/'.$name,
+        'formato' => $formato,
+        'channel' => $auto_string
+        );
+ 
+         $id = Music::create($input)->id;
+
+         $music = Music::findOrFail($id);
+    		
+    	 $music =  json_encode($music);
+
+          //echo $music;
+
+		  ModelCola::cola($music);
+		  ModelCola::Receiving_msg($auto_string);
+
+	    $this->layout->titulo = 'prueba';
+		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));	
+
 	}
+
+
 
 
 	/**
@@ -74,6 +76,7 @@ class MainController extends \BaseController {
 	 */
 	public function store()
 	{
+    
 
 
 	}

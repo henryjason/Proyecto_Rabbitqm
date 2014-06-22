@@ -3,12 +3,16 @@
 class Music extends Eloquent
 {
     protected $table      = 'music';
-    protected $fillable   = array('url', 'formato');
+    protected $fillable   = array('url', 'formato', 'channel');
     protected $guarded    = array('id');
     public    $timestamps = false;
 
- public static function ventasPorVendedor()
+ public static function ejemplo()
     {
         return DB::select("select * from music");
     }
+
+
+    
+
 }

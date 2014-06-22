@@ -58,6 +58,9 @@
 <?php
 
 //require_once __DIR__ . '/vendor/autoload.php';
+
+/*
+
    use PhpAmqpLib\Connection\AMQPConnection;
     use PhpAmqpLib\Message\AMQPMessage;
 
@@ -114,6 +117,8 @@ $channel->basic_consume('response', '', false, true, false, false, $callback);
 
 
 }
+
+*/
 
 ?>
 

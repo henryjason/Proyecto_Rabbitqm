@@ -4,6 +4,14 @@
 	<title>{{ $titulo }}</title>
 
 </head>
+
+<?php
+
+use PhpAmqpLib\Connection\AMQPConnection;
+ use PhpAmqpLib\Message\AMQPMessage;
+ 
+ ?>
+
 <body>
 	<ul>
 		<li>{{link_to('home', 'Conversion', array('id' => 'home'), false);}}</li>

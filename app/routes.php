@@ -11,7 +11,7 @@
 |
 */
 Route::resource('home', 'MainController');
-Route::post('home', 'MainController@subir');
+Route::post('home', 'MainController@create');
 
 Route::get('/', function()
 {
