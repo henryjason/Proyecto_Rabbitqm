@@ -23,23 +23,34 @@ class MainController extends \BaseController {
 
      public function subir()
 	{
-
+         
+         $name = '';
 
    	if(Input::hasFile('archivo')) {
 
    		  $file = Input::file('archivo');
-     
+           
           $extension = $file->getClientOriginalExtension();
+          //$type = $file->getMimeType();
 
-                   if($extension == 'mp3'){
+                   if($extension == 'mp3' || $extension == 'wav'){
                          $name = $file->getClientOriginalName();
                          $file->move( 'public/Upload_Files', $name);
                     }
 
+         
+           
     }
-     
-   
-	    $this->layout->titulo = 'Prueba';
+
+        $formato = Input::get('formato');
+
+
+		$music = new Music;
+		$music->url= 'public/Upload_Files/'.$name;
+		$music->formato= $formato;
+		$music->save();
+		  
+	    $this->layout->titulo = 'prueba';
 		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));	
 	
 	}
@@ -63,6 +74,8 @@ class MainController extends \BaseController {
 	 */
 	public function store()
 	{
+
+
 	}
 
 

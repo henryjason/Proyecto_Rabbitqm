@@ -32,16 +32,28 @@
 	<h1>Upload Files</h1>
  
       	   {{ Form::open(array(
-     'url'=>'home/subir', 
+     'url'=>'home/', 
      'method' => 'post',
      'enctype'=>'multipart/form-data'
 ) )}}
 
+{{ Form::label('formato', 'Formato')}}
+    
+    <select name="formato">
+    	<option value='mp3'>MP3</option>
+    	<option value='wav'>WAV</option>
+    	<option value='ogg'>ogg</option>
+    </select>
+
+<br>
+
 {{ Form::file('archivo') }}
+<br>
 {{ Form::submit('subir') }}
 
 {{ Form::close()}}     
 
+<br>
 
 <?php
 

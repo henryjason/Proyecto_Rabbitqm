@@ -7,5 +7,8 @@ class Music extends Eloquent
     protected $guarded    = array('id');
     public    $timestamps = false;
 
-
+ public static function ventasPorVendedor()
+    {
+        return DB::select("select * from music");
+    }
 }
