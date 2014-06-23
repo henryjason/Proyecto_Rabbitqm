@@ -9,9 +9,9 @@ class MainController extends \BaseController {
 	 */
 	public function index()
 	{
-        //$aviones = Avion::all();
+        //$music = Music::all();
 		$this->layout->titulo = 'Conversion de Archivos';
-		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));
+		return $this->layout->nest('content', 'Main.main', array('music' => null));
 		//return View::make('Main.main');
 	}
 
@@ -35,11 +35,16 @@ class MainController extends \BaseController {
           $extension = $file->getClientOriginalExtension();
           //$type = $file->getMimeType();
 
-                   if($extension == 'mp3' || $extension == 'wav'){
+                   if($extension == 'mp3'){
                         // $name = $file->getClientOriginalName();
                          $name = $auto_string.'.'.$extension;
                          $file->move( 'public/Upload_Files/', $name);
+
+                    }else{
+                    	 $this->layout->titulo = 'prueba';
+	  	                 return $this->layout->nest('content', 'Main.main', array('music' =>  ""));	
                     }
+
 
     }
 
@@ -49,20 +54,36 @@ class MainController extends \BaseController {
         'formato' => $formato,
         'channel' => $auto_string
         );
- 
+            
+            //creamos un nuevo registro 
          $id = Music::create($input)->id;
 
+            //array del registro registrado
          $music = Music::findOrFail($id);
     		
-    	 $music =  json_encode($music);
+    		//pasos a  json los resultados
+    	 $json_music =  json_encode($music);
 
-          //echo $music;
 
-		  ModelCola::cola($music);
-		  ModelCola::Receiving_msg($auto_string);
+          //ponemos en cola  $json_music
+		  ModelCola::cola($json_music);
+           
+           //esperamos la respuesta del servidor
+		  $json_array = ModelCola::Receiving_msg($auto_string);
 
-	    $this->layout->titulo = 'prueba';
-		return $this->layout->nest('content', 'Main.main', array('aviones' => ""));	
+           //descodificamos el json que nos devuelve los woker
+		  $MsgArray = json_decode($json_array);
+           $url = $MsgArray->url;
+           $formato = $MsgArray->formato;
+
+           //actualizamos la nueva direccion donde se encuentra convertido
+          $music->url = $url;
+          $music->formato = $formato;
+          $music->save();
+ 
+	   
+	      $this->layout->titulo = 'prueba';
+	  	return $this->layout->nest('content', 'Main.main', array('music' =>  $music));	
 
 	}
 

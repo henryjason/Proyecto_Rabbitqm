@@ -3,9 +3,10 @@
  use PhpAmqpLib\Connection\AMQPConnection;
  use PhpAmqpLib\Message\AMQPMessage;
 
+
 class ModelCola
 {
-     
+      public static $msg_response; 
 
       public static function auto_string()
         {
@@ -50,36 +51,37 @@ entre el rango 0 a Numero de letras que tiene la cadena */
     public static function Receiving_msg($canal)
 {
 
+
+
 $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
 $channel = $connection->channel();
 
 
 $channel->queue_declare($canal, false, false, false, false);
 
-echo '<h1>CONVIRTIENDO CANCION</h1>';
-
 $callback = function($msg) {
 
 
-  echo "Link: ", '<a href="'.$msg->body.'">Descargar</a>', "\n";
+  //echo "Link: ", '<a href="'.$msg->body.'">Descargar</a>', "\n";
 
+ModelCola::$msg_response =  $msg->body;
 
 };
+
 
 $channel->basic_qos(null, 1, null);
 $channel->basic_consume($canal, '', false, true, false, false, $callback);
 
     
-    $link = $channel->wait();
+   $channel->wait();
 
 
     $channel->close();
     $connection->close();
 
-return $link;
+   return ModelCola::$msg_response;
 
 }
-
 
 
 }

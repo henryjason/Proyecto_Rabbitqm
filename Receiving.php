@@ -10,22 +10,26 @@ $channel = $connection->channel();
 
 $channel->queue_declare('hello', false, false, false, false);
 
-echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
-
-
+echo '::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::', "\n";
+echo '::             ESPERANDO MENSAJES EN COLA                 ::', "\n";
+echo '::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::', "\n";
 
 $callback = function($msg) {
+
+
 $mensaje = $msg->body;
 
-//echo $mensaje;
+convercion($mensaje);
 
-     response($mensaje);
+ sleep(substr_count($msg->body, '.'));
+//echo $mensaje;
+$msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 
 
 };
 
 $channel->basic_qos(null, 1, null);
-$channel->basic_consume('hello', '', false, true, false, false, $callback);
+$channel->basic_consume('hello', '', false, false, false, false, $callback);
 
 while(count($channel->callbacks)) {
     
@@ -37,11 +41,9 @@ $channel->close();
 $connection->close();
 
 
+function convercion($json_array){
 
-
-function response($mensaje){
-
-    $MsgArray = json_decode($mensaje);
+$MsgArray = json_decode($json_array);
     
     $id = $MsgArray->id;
     $url = $MsgArray->url;
@@ -50,18 +52,34 @@ function response($mensaje){
      
     $url_out = '/Download_Files/'.$canal.'.'.$formato;
 
+
     exec('lame '. $url.' public/Download_Files/'.$canal.'.'.$formato);
 
-	 $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+    $msg_out = array('id' => $id, 'url' => $url_out, 'formato' => $formato, 'channel' => $canal);
+
+    $msg_out=  json_encode($msg_out);
+
+    response($msg_out, $canal);
+
+}
+
+
+function response($mensaje, $canal){
+
+    
+
+     $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
     $channel = $connection->channel();
 
 
     $channel->queue_declare($canal, false, false, false, false);
 
-    $msg = new AMQPMessage($url_out);
+    $msg = new AMQPMessage($mensaje);
     $channel->basic_publish($msg, '', $canal);
 
-    echo " [x] Sent 'response'\n";
+echo '::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::', "\n";
+echo '::              lA CONVERSION FUE EXITOSA                 ::', "\n";
+echo '::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::', "\n";
 
     $channel->close();
     $connection->close();

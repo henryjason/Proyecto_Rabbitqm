@@ -43,6 +43,9 @@
     	<option value='mp3'>MP3</option>
     	<option value='wav'>WAV</option>
     	<option value='ogg'>ogg</option>
+    	<option value='amr'>ARM</option>
+    	<option value='ac3'>AC3</option>
+    	<option value='Wma'>WMA</option>
     </select>
 
 <br>
@@ -55,70 +58,20 @@
 
 <br>
 
+
+
+
 <?php
 
-//require_once __DIR__ . '/vendor/autoload.php';
 
-/*
 
-   use PhpAmqpLib\Connection\AMQPConnection;
-    use PhpAmqpLib\Message\AMQPMessage;
+if($music != null){
 
-for ($i=0; $i < 1; $i++) { 
-	send_msg($i);
+//descodificamos el json que nos devuelve el controlador
+		  $MsgArray = json_decode($music);
+          $url = $MsgArray->url;
+           echo "Link: ", '<a href="'.$url.'">Descargar</a>', "\n";
 }
-
-function send_msg($i)
-{
-
-    $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
-    $channel = $connection->channel();
-
-
-    $channel->queue_declare('hello', false, false, false, false);
-
-    $msg = new AMQPMessage('['.$i.']'.'Henry Cordero Bonilla');
-    $channel->basic_publish($msg, '', 'hello');
-
-    echo " [x] Sent 'Hello World!'\n";
-
-    $channel->close();
-    $connection->close();
-
-
-    Receiving_msg();
-
-}
-
-function Receiving_msg()
-{
-
-$connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
-$channel = $connection->channel();
-
-
-$channel->queue_declare('response', false, false, false, false);
-
-echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
-
-$callback = function($msg) {
-  echo " [x] Received ", $msg->body, "\n";
-};
-
-$channel->basic_qos(null, 1, null);
-$channel->basic_consume('response', '', false, true, false, false, $callback);
-
-    
-    $channel->wait();
-
-
-    $channel->close();
-    $connection->close();
-
-
-}
-
-*/
 
 ?>
 
