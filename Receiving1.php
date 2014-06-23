@@ -53,7 +53,9 @@ $MsgArray = json_decode($json_array);
     $url_out = '/Download_Files/'.$canal.'.'.$formato;
 
 
-    exec('lame '. $url.' public/Download_Files/'.$canal.'.'.$formato);
+  // exec('lame '. $url.' public/Download_Files/'.$canal.'.'.$formato);
+
+    exec('ffmpeg -i '. $url.' public/Download_Files/'.$canal.'.'.$formato);
 
     $msg_out = array('id' => $id, 'url' => $url_out, 'formato' => $formato, 'channel' => $canal);
 

@@ -42,10 +42,11 @@
     <select name="formato">
     	<option value='mp3'>MP3</option>
     	<option value='wav'>WAV</option>
-    	<option value='ogg'>ogg</option>
-    	<option value='amr'>ARM</option>
+    	<option value='ogg'>OGG</option>
+    	<option value='aac'>AAC</option>
     	<option value='ac3'>AC3</option>
-    	<option value='Wma'>WMA</option>
+    	<option value='wma'>WMA</option>
+    	<option value='rm'>RM</option>
     </select>
 
 <br>
@@ -70,7 +71,10 @@ if($music != null){
 //descodificamos el json que nos devuelve el controlador
 		  $MsgArray = json_decode($music);
           $url = $MsgArray->url;
-           echo "Link: ", '<a href="'.$url.'">Descargar</a>', "\n";
+          $nombre = $MsgArray->channel;
+          $formato = $MsgArray->formato;
+
+           echo "Link: ", '<a href="'.$url.'">Descargar '.$nombre.'.'.$formato.'</a>', "\n";
 }
 
 ?>

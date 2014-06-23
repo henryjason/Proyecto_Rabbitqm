@@ -35,16 +35,14 @@ class MainController extends \BaseController {
           $extension = $file->getClientOriginalExtension();
           //$type = $file->getMimeType();
 
-                   if($extension == 'mp3'){
+                   if($extension == 'mp3' || $extension == 'wav' || $extension == 'ogg' || $extension == 'wma' || $extension == 'ac3' || $extension == 'aac' || $extension == 'rm'){
                         // $name = $file->getClientOriginalName();
                          $name = $auto_string.'.'.$extension;
                          $file->move( 'public/Upload_Files/', $name);
-
                     }else{
-                    	 $this->layout->titulo = 'prueba';
-	  	                 return $this->layout->nest('content', 'Main.main', array('music' =>  ""));	
+                    	$this->layout->titulo = 'Conversion de Archivos';
+		return $this->layout->nest('content', 'Main.main', array('music' => null));
                     }
-
 
     }
 
