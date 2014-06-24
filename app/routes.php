@@ -12,6 +12,7 @@
 */
 Route::resource('home', 'MainController');
 Route::post('home', 'MainController@create');
+Route::get('home/{id}', 'MainController@show');
 
 Route::get('/', function()
 {

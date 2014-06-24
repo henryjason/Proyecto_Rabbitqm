@@ -24,6 +24,8 @@
 		}
 	</style>
 
+
+
 </head>
 
 <body>
@@ -60,27 +62,65 @@
 <br>
 
 
-
-
-<?php
-
-
-
-if($music != null){
-
-//descodificamos el json que nos devuelve el controlador
-		  $MsgArray = json_decode($music);
-          $url = $MsgArray->url;
-          $nombre = $MsgArray->channel;
-          $formato = $MsgArray->formato;
-
-           echo "Link: ", '<a href="'.$url.'">Descargar '.$nombre.'.'.$formato.'</a>', "\n";
-}
-
-?>
-
+<div id="dialog" title="Proyecto">
+ <a id="link">DOWNLOAD LINK</a>
+</div>
 
 
 	</div>
+
+
+<script type="text/javascript">
+
+
+//verificamos si la variable musica trae datos
+<?php if (isset($music)) { ?>
+
+// 
+var id = (<?php echo $music->id ?>);
+var sleep=setInterval(function(){llamadoAjax(id)},1000);
+
+
+<?php } ?>
+
+
+function llamadoAjax(id){
+	$.ajax({
+		url: '/home/'+id,
+		type: 'GET'
+	})
+	.done(function(response) {
+		
+		//alert(response);
+        
+        var music = JSON.parse(response);
+		//alert(music.id +" " + music.url);
+
+         if(music.status == 1){
+         clearInterval(sleep);
+         
+         $(function() {
+    $( "#dialog" ).dialog();
+
+     document.getElementById("link").href=music.url;
+
+  });
+
+
+         }
+
+		
+
+	})
+	.fail(function() {
+		alert("error"); 
+	});
+	
+}
+
+
+	</script>
+
+
 </body>
 </html>

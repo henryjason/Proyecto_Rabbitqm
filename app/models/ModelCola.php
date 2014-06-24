@@ -34,10 +34,17 @@ entre el rango 0 a Numero de letras que tiene la cadena */
     $channel = $connection->channel();
 
 
-    $channel->queue_declare('hello', false, false, false, false);
+    $channel->queue_declare('task_queue', false, true, false, false);
 
-    $msg = new AMQPMessage($mensaje);
-    $channel->basic_publish($msg, '', 'hello');
+    if(empty($data)) $data = $mensaje;
+    
+    $msg = new AMQPMessage($data,
+                        array('delivery_mode' => 2) # make message persistent
+                      );
+   // $msg = new AMQPMessage($mensaje);
+
+
+    $channel->basic_publish($msg, '', 'task_queue');
 
 
     $channel->close();
@@ -47,6 +54,7 @@ entre el rango 0 a Numero de letras que tiene la cadena */
 
     }
 
+/*
 
     public static function Receiving_msg($canal)
 {
@@ -83,5 +91,6 @@ $channel->basic_consume($canal, '', false, true, false, false, $callback);
 
 }
 
+*/
 
 }

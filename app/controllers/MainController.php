@@ -9,7 +9,9 @@ class MainController extends \BaseController {
 	 */
 	public function index()
 	{
-        //$music = Music::all();
+
+
+         $music = Music::findOrFail(441);
 		$this->layout->titulo = 'Conversion de Archivos';
 		return $this->layout->nest('content', 'Main.main', array('music' => null));
 		//return View::make('Main.main');
@@ -50,7 +52,9 @@ class MainController extends \BaseController {
         $input = array(
         'url' =>'public/Upload_Files/'.$name,
         'formato' => $formato,
-        'channel' => $auto_string
+        'channel' => $auto_string,
+        'status' => '0'
+
         );
             
             //creamos un nuevo registro 
@@ -66,6 +70,7 @@ class MainController extends \BaseController {
           //ponemos en cola  $json_music
 		  ModelCola::cola($json_music);
            
+           /*
            //esperamos la respuesta del servidor
 		  $json_array = ModelCola::Receiving_msg($auto_string);
 
@@ -79,8 +84,9 @@ class MainController extends \BaseController {
           $music->formato = $formato;
           $music->save();
  
+ */
 	   
-	      $this->layout->titulo = 'prueba';
+	      $this->layout->titulo = 'Conversion';
 	  	return $this->layout->nest('content', 'Main.main', array('music' =>  $music));	
 
 	}
@@ -109,7 +115,16 @@ class MainController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+	
+
+			if (Request::ajax())
+		{
+    		$music = Music::findOrFail($id);
+    		
+    		return  json_encode($music);
+
+		}		
+
 	}
 
 
