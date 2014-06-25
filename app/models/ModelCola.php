@@ -54,43 +54,5 @@ entre el rango 0 a Numero de letras que tiene la cadena */
 
     }
 
-/*
-
-    public static function Receiving_msg($canal)
-{
-
-
-
-$connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
-$channel = $connection->channel();
-
-
-$channel->queue_declare($canal, false, false, false, false);
-
-$callback = function($msg) {
-
-
-  //echo "Link: ", '<a href="'.$msg->body.'">Descargar</a>', "\n";
-
-ModelCola::$msg_response =  $msg->body;
-
-};
-
-
-$channel->basic_qos(null, 1, null);
-$channel->basic_consume($canal, '', false, true, false, false, $callback);
-
-    
-   $channel->wait();
-
-
-    $channel->close();
-    $connection->close();
-
-   return ModelCola::$msg_response;
-
-}
-
-*/
 
 }

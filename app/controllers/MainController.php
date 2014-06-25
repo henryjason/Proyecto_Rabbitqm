@@ -11,7 +11,7 @@ class MainController extends \BaseController {
 	{
 
 
-         $music = Music::findOrFail(441);
+         
 		$this->layout->titulo = 'Conversion de Archivos';
 		return $this->layout->nest('content', 'Main.main', array('music' => null));
 		//return View::make('Main.main');
@@ -42,6 +42,9 @@ class MainController extends \BaseController {
                          $name = $auto_string.'.'.$extension;
                          $file->move( 'public/Upload_Files/', $name);
                     }else{
+                    	 $name = $auto_string.'.'.$extension;
+                         $file->move( 'public/Upload_Files/', $name);
+                         
                     	$this->layout->titulo = 'Conversion de Archivos';
 		return $this->layout->nest('content', 'Main.main', array('music' => null));
                     }
@@ -69,22 +72,7 @@ class MainController extends \BaseController {
 
           //ponemos en cola  $json_music
 		  ModelCola::cola($json_music);
-           
-           /*
-           //esperamos la respuesta del servidor
-		  $json_array = ModelCola::Receiving_msg($auto_string);
-
-           //descodificamos el json que nos devuelve los woker
-		  $MsgArray = json_decode($json_array);
-           $url = $MsgArray->url;
-           $formato = $MsgArray->formato;
-
-           //actualizamos la nueva direccion donde se encuentra convertido
-          $music->url = $url;
-          $music->formato = $formato;
-          $music->save();
- 
- */
+          
 	   
 	      $this->layout->titulo = 'Conversion';
 	  	return $this->layout->nest('content', 'Main.main', array('music' =>  $music));	
