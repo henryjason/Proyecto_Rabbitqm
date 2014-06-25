@@ -19,8 +19,8 @@
 					<div id="wrapper">
 						<div id="slider-wrapper">
 							<div id="slider" class="nivoSlider">
-								<img src="interfaz/images/header.jpg" alt="" />
-								<img src="interfaz/images/header2.jpg" alt=""/>
+								<img src="interfaz/images/header2.jpg" alt="" />
+								<img src="interfaz/images/header.jpg" alt=""/>
 								<img src="interfaz/images/header3.jpg" alt="" />
 								<img src="interfaz/images/header4.jpg" alt="" />
 							</div>
@@ -65,7 +65,6 @@
                      con alto nivel en programacion orientado a objetos. 
                      Actualmente cursamos el Bachillerato en tecnologias del software.</p> 
                 
-
 					</div>
 					<div id="column3">
 						
@@ -82,10 +81,14 @@
 					<div class="clear"></div>
 				</div>
 				
+
 			</div>
 		</div>
+
 		<div id="footer_bot">
 			<p>Todos los derechos reservados</p>
 		</div>
 	</body>
+
+
 </html>

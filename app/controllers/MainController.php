@@ -42,14 +42,16 @@ class MainController extends \BaseController {
                          $name = $auto_string.'.'.$extension;
                          $file->move( 'public/Upload_Files/', $name);
                     }else{
-                    	 $name = $auto_string.'.'.$extension;
-                         $file->move( 'public/Upload_Files/', $name);
                          
                     	$this->layout->titulo = 'Conversion de Archivos';
-		return $this->layout->nest('content', 'Main.main', array('music' => null));
+		                return $this->layout->nest('content', 'Main.main', array('music' => null));
                     }
 
+    }else{
+    	$this->layout->titulo = 'Conversion de Archivos';
+		return $this->layout->nest('content', 'Main.main', array('music' => null));
     }
+
 
 
         $input = array(
